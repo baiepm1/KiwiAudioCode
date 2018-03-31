@@ -23,8 +23,8 @@ pinMode(Inc, INPUT);
   lcd.print(".");
   delay (1000);
   ////////////
-//  lcd.home();
-//  lcd.print("Vol:");
+  lcd.setCursor(0,0);
+  lcd.print("Vol:");
   // Turn on the display:
 //  lcd.display();
   ///////////////
@@ -40,16 +40,12 @@ void loop()
 buttonstate_1=digitalRead(Inc);
 buttonstate_2=digitalRead(Dec);
 
-lcd.home();
-lcd.print("Vol:");
-lcd.print(String(light));
-  
 if(buttonstate_1 == HIGH)
 {
   light+=10;
   digitalPotWrite(light);
-  lcd.home();
-  lcd.print("Vol:");
+  lcd.clear();
+  lcd.setCursor(0,4);
   lcd.print(String(light));
 }
  else
@@ -60,8 +56,8 @@ if(buttonstate_1 == HIGH)
 if(buttonstate_2 == HIGH)
 {
   light-=10;
-  lcd.home();
-  lcd.print("Vol:");
+  lcd.clear();
+  lcd.setCursor(0,4);
   lcd.print(String(light));
   digitalPotWrite(light);
 }
@@ -79,3 +75,4 @@ int digitalPotWrite(int value)
   SPI.transfer(value);
   digitalWrite(CS, HIGH);
 }
+
