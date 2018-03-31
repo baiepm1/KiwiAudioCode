@@ -1,0 +1,2 @@
+# KiwiAudioCode
+lcd/digipot control
