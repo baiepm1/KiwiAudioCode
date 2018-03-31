@@ -23,30 +23,42 @@ pinMode(Inc, INPUT);
   lcd.print(".");
   delay (1000);
   ////////////
-  lcd.setCursor(0,0);
-  lcd.print("Vol:");
+    lcd.home();
+     delay (1000);
+  //lcd.print("Vol:10   Bass:69");
+  // lcd.setCursor(0, 1);
+  //lcd.print("Gain:00");
   // Turn on the display:
-//  lcd.display();
+  lcd.display();
   ///////////////
+  
 pinMode (CS, OUTPUT);
 SPI.begin();
 }
 int buttonstate_1=0;
 int buttonstate_2=0;
-int light = 0;
+int light=0;
 int temp=120;
+
 void loop()
 {
-buttonstate_1=digitalRead(Inc);
+setBrightiness();
+
+}
+
+void setBrightiness()
+{
+  buttonstate_1=digitalRead(Inc);
 buttonstate_2=digitalRead(Dec);
 
 if(buttonstate_1 == HIGH)
 {
-  light+=10;
+  
   digitalPotWrite(light);
   lcd.clear();
   lcd.setCursor(0,4);
-  lcd.print(String(light));
+  lcd.print(String(light)); 
+  light+=10;
 }
  else
 {
@@ -56,18 +68,13 @@ if(buttonstate_1 == HIGH)
 if(buttonstate_2 == HIGH)
 {
   light-=10;
-  lcd.clear();
-  lcd.setCursor(0,4);
-  lcd.print(String(light));
   digitalPotWrite(light);
 }
  else
 {
   digitalPotWrite(light);
 }
-
 }
-
 int digitalPotWrite(int value)
 {
   digitalWrite(CS, LOW);
@@ -75,4 +82,3 @@ int digitalPotWrite(int value)
   SPI.transfer(value);
   digitalWrite(CS, HIGH);
 }
-
