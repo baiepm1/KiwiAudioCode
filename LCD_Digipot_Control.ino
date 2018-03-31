@@ -23,10 +23,10 @@ pinMode(Inc, INPUT);
   lcd.print(".");
   delay (1000);
   ////////////
-  lcd.home();
-  lcd.print("Vol:");
+//  lcd.home();
+//  lcd.print("Vol:");
   // Turn on the display:
-  lcd.display();
+//  lcd.display();
   ///////////////
 pinMode (CS, OUTPUT);
 SPI.begin();
