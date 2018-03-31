@@ -41,7 +41,7 @@ buttonstate_1=digitalRead(Inc);
 buttonstate_2=digitalRead(Dec);
 
 lcd.home();
-lcd.print("Vol:")
+lcd.print("Vol:");
 lcd.print(String(light));
   
 if(buttonstate_1 == HIGH)
@@ -49,7 +49,7 @@ if(buttonstate_1 == HIGH)
   light+=10;
   digitalPotWrite(light);
   lcd.home();
-  lcd.print("Vol:")
+  lcd.print("Vol:");
   lcd.print(String(light));
 }
  else
@@ -61,7 +61,7 @@ if(buttonstate_2 == HIGH)
 {
   light-=10;
   lcd.home();
-  lcd.print("Vol:")
+  lcd.print("Vol:");
   lcd.print(String(light));
   digitalPotWrite(light);
 }
