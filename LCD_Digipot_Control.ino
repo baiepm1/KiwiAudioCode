@@ -19,9 +19,9 @@ pinMode(Inc, INPUT);
   lcd.display();
   delay (1200);
   lcd.print(".");
-  delay (1000);
+//  delay (1000);
   lcd.print(".");
-  delay (1000);
+//  delay (1000);
   ////////////
     lcd.home();
      delay (1000);
@@ -38,10 +38,11 @@ SPI.begin();
 int buttonstate_1=0;
 int buttonstate_2=0;
 int light=0;
-int temp=120;
+int temp=1200;
 
 void loop()
-{
+{  
+digitalPotWrite(light);
 setBrightiness();
 
 }
@@ -51,33 +52,37 @@ void setBrightiness()
   buttonstate_1=digitalRead(Inc);
 buttonstate_2=digitalRead(Dec);
 
-if(buttonstate_1 == HIGH)
+
+while (buttonstate_1 == HIGH)
 {
   
-  
-  lcd.setCursor(4,0);
-
-  if(light < temp)
+ if (light <= 130)
   {
-    light+=5;
+    light+=10;
     digitalPotWrite(light);
-  }
-  else
+   // lcd.autoscroll();
+    lcd.setCursor(0,0);
+    lcd.print("Resistor: ");
     lcd.print(String(light)); 
-    delay(10);
+    //lcd.print("               ");
+    delay(50);
+    //lcd.noAutoscroll();
+  }
+  break;
 }
 
 
-if(buttonstate_2 == HIGH)
+while(buttonstate_2 == HIGH)
 {
+  if (light >0)
+  {
+    light-=10;
   digitalPotWrite(light);
   lcd.setCursor(4,0);
   lcd.print(String(light)); 
-  light-=10;
-}
- else
-{
-  digitalPotWrite(light);
+  delay(50);
+  }
+break;
 }
 
 
