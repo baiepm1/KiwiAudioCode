@@ -1,3 +1,4 @@
+
 #include <SPI.h>
 #include <LiquidCrystal.h>
 
@@ -56,7 +57,7 @@ buttonstate_2=digitalRead(Dec);
 while (buttonstate_1 == HIGH)
 {
   
- if (light <= 130)
+ if (light < 120)
   {
     light+=10;
     digitalPotWrite(light);
@@ -77,9 +78,13 @@ while(buttonstate_2 == HIGH)
   if (light >0)
   {
     light-=10;
-  digitalPotWrite(light);
-  lcd.setCursor(4,0);
-  lcd.print(String(light)); 
+  digitalPotWrite(light);   
+  lcd.setCursor(0,0);
+    lcd.print("Resistor: ");
+    lcd.print(String(light)); 
+    //lcd.print("               ");
+    delay(50);
+
   delay(50);
   }
 break;
