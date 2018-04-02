@@ -54,26 +54,33 @@ buttonstate_2=digitalRead(Dec);
 if(buttonstate_1 == HIGH)
 {
   
+  
+  lcd.setCursor(4,0);
+
+  if(light < temp)
+  {
+    light+=5;
+    digitalPotWrite(light);
+  }
+  else
+    lcd.print(String(light)); 
+    delay(10);
+}
+
+
+if(buttonstate_2 == HIGH)
+{
   digitalPotWrite(light);
-  lcd.clear();
-  lcd.setCursor(0,4);
+  lcd.setCursor(4,0);
   lcd.print(String(light)); 
-  light+=10;
+  light-=10;
 }
  else
 {
   digitalPotWrite(light);
 }
 
-if(buttonstate_2 == HIGH)
-{
-  light-=10;
-  digitalPotWrite(light);
-}
- else
-{
-  digitalPotWrite(light);
-}
+
 }
 int digitalPotWrite(int value)
 {
