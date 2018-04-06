@@ -1,5 +1,3 @@
-
-
 #include <SPI.h>
 #include <LiquidCrystal.h>
 
@@ -27,9 +25,11 @@ pinMode(Inc, INPUT);
   ////////////
     lcd.home();
      delay (1000);
-  //lcd.print("Vol:10   Bass:69");
-  // lcd.setCursor(0, 1);
-  //lcd.print("Gain:00");
+  
+  lcd.print("Left Button VOL");
+   
+  lcd.setCursor(0, 1);
+  lcd.print("Right Button Bass");
   // Turn on the display:
   lcd.display();
   ///////////////
@@ -39,7 +39,7 @@ SPI.begin();
 }
 int buttonstate_1=0;
 int buttonstate_2=0;
-int light=0;
+int light=50;
 int temp=120;
 
 void loop()
