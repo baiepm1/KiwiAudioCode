@@ -1,4 +1,5 @@
 
+
 #include <SPI.h>
 #include <LiquidCrystal.h>
 
@@ -20,9 +21,9 @@ pinMode(Inc, INPUT);
   lcd.display();
   delay (1200);
   lcd.print(".");
-//  delay (1000);
+  delay (1000);
   lcd.print(".");
-//  delay (1000);
+  delay (1000);
   ////////////
     lcd.home();
      delay (1000);
@@ -39,11 +40,10 @@ SPI.begin();
 int buttonstate_1=0;
 int buttonstate_2=0;
 int light=0;
-int temp=1200;
+int temp=120;
 
 void loop()
-{  
-digitalPotWrite(light);
+{
 setBrightiness();
 
 }
@@ -52,7 +52,6 @@ void setBrightiness()
 {
   buttonstate_1=digitalRead(Inc);
 buttonstate_2=digitalRead(Dec);
-
 
 while (buttonstate_1 == HIGH)
 {
@@ -89,7 +88,6 @@ while(buttonstate_2 == HIGH)
   }
 break;
 }
-
 
 }
 int digitalPotWrite(int value)
