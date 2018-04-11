@@ -44,11 +44,16 @@ int temp=120;
 
 void loop()
 {
-setBrightiness();
+
+lcd.print("Resistor:");
+lcd.print(setBrightiness());
+
+ 
+delay(70);
 
 }
 
-void setBrightiness()
+int setBrightiness()
 {
   buttonstate_1=digitalRead(Inc);
 buttonstate_2=digitalRead(Dec);
@@ -61,14 +66,16 @@ while (buttonstate_1 == HIGH)
     light+=10;
     digitalPotWrite(light);
    // lcd.autoscroll();
-    lcd.setCursor(0,0);
-    lcd.print("Resistor: ");
-    lcd.print(String(light)); 
+    //lcd.setCursor(0,0);
+    //lcd.print("Resistor: ");
+    //lcd.print(String(light)); 
     //lcd.print("               ");
     delay(50);
     //lcd.noAutoscroll();
   }
   break;
+
+
 }
 
 
@@ -76,11 +83,11 @@ while(buttonstate_2 == HIGH)
 {
   if (light >0)
   {
-    light-=10;
+    light-=1;
   digitalPotWrite(light);   
-  lcd.setCursor(0,0);
-    lcd.print("Resistor: ");
-    lcd.print(String(light)); 
+  //lcd.setCursor(0,0);
+   // lcd.print("Resistor: ");
+    //lcd.print(String(light)); 
     //lcd.print("               ");
     delay(50);
 
@@ -88,7 +95,7 @@ while(buttonstate_2 == HIGH)
   }
 break;
 }
-
+return light;
 }
 int digitalPotWrite(int value)
 {
