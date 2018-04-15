@@ -2,101 +2,75 @@
 #include <LiquidCrystal.h>
 
 byte address = 0x00;
-int CS= 10;
-const int rs = 12, en = 6, d4 = 5, d5 = 4, d6 = 3, d7 = 2;
+int CS = 10;
+const int rs = 1, en = 6, d4 = 5, d5 = 4, d6 = 3, d7 = 2;
 LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
 const int Dec = 9;
 const int Inc = 8;
+int buttonstate_1 = 0;
+int buttonstate_2 = 0;
+int vol = 50;
+int temp = 120;
+
 
 void setup()
 {
-pinMode(Dec, INPUT);
-pinMode(Inc, INPUT);
+  pinMode(Dec, INPUT);
+  pinMode(Inc, INPUT);
 
-  lcd.begin(16, 2);
-   lcd.home();
+  lcd.begin(16,2);
+  lcd.home();
   lcd.print("KIWI AUDIO .");
-  lcd.display();
   delay (1200);
   lcd.print(".");
   delay (1000);
   lcd.print(".");
   delay (1000);
-  ////////////
-    lcd.home();
-     delay (1000);
-  
-  lcd.print("Left Button VOL");
-   
-  lcd.setCursor(0, 1);
-  lcd.print("Right Button Bass");
-  // Turn on the display:
-  lcd.display();
-  ///////////////
-  
-pinMode (CS, OUTPUT);
-SPI.begin();
+  pinMode (CS, OUTPUT);
+  SPI.begin();
 }
-int buttonstate_1=0;
-int buttonstate_2=0;
-int light=50;
-int temp=120;
 
 void loop()
 {
-
-lcd.print("Resistor:");
-lcd.print(setBrightiness());
-
+  lcd.clear();
+  //lcd.noCursor();
+  lcd.setCursor(0,0);
+  lcd.print("Volume: ");
+  lcd.print(setVol());
+  delay(150);
  
-delay(70);
-
-}
-
-int setBrightiness()
-{
-  buttonstate_1=digitalRead(Inc);
-buttonstate_2=digitalRead(Dec);
-
-while (buttonstate_1 == HIGH)
-{
   
- if (light < 120)
-  {
-    light+=10;
-    digitalPotWrite(light);
-   // lcd.autoscroll();
-    //lcd.setCursor(0,0);
-    //lcd.print("Resistor: ");
-    //lcd.print(String(light)); 
-    //lcd.print("               ");
-    delay(50);
-    //lcd.noAutoscroll();
-  }
-  break;
-
 
 }
 
-
-while(buttonstate_2 == HIGH)
+int setVol()
 {
-  if (light >0)
-  {
-    light-=1;
-  digitalPotWrite(light);   
-  //lcd.setCursor(0,0);
-   // lcd.print("Resistor: ");
-    //lcd.print(String(light)); 
-    //lcd.print("               ");
-    delay(50);
+  buttonstate_1 = digitalRead(Inc);
+  buttonstate_2 = digitalRead(Dec);
 
-  delay(50);
+  while (buttonstate_1 == HIGH)
+  {
+    if (vol < 120){
+      vol += 10;
+      digitalPotWrite(vol);
+      delay(50);
+    }
+    break;
   }
-break;
+
+
+  while (buttonstate_2 == HIGH)
+  {
+    if (vol > 0){
+      vol -= 10;
+      digitalPotWrite(vol);
+      delay(50);
+    }
+    break;
+  }
+  return vol;
 }
-return light;
-}
+
 int digitalPotWrite(int value)
 {
   digitalWrite(CS, LOW);
