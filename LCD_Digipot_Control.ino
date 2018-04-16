@@ -36,7 +36,7 @@ void loop()
   //lcd.noCursor();
   lcd.setCursor(0,0);
   lcd.print("Volume: ");
-  lcd.print(setVol());
+  lcd.print(setVol()/10);
   delay(150);
  
   
