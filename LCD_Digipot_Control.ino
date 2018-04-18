@@ -9,6 +9,10 @@ const int Dec = 9;
 const int Inc = 8;
 int buttonstate_1 = 0;
 int buttonstate_2 = 0;
+int buttonchange = 7;
+int buttonPushCounter = 1;   // counter for the number of button presses
+int buttonState = 0;         // current state of the button
+int lastButtonState = 0;     // previous state of the button
 int vol = 50;
 int temp = 120;
 
@@ -17,7 +21,7 @@ void setup()
 {
   pinMode(Dec, INPUT);
   pinMode(Inc, INPUT);
-
+  pinMode(buttonchange,INPUT);
   lcd.begin(16,2);
   lcd.home();
   lcd.print("KIWI AUDIO .");
@@ -32,22 +36,91 @@ void setup()
 
 void loop()
 {
+ buttonstate_1 = digitalRead(Inc);
+ buttonstate_2 = digitalRead(Dec);
+ buttonState =  digitalRead(buttonchange);
+
+  do
+  {
+   
+      if(buttonState == HIGH &&  buttonPushCounter < 3)
+    {
+    
+    
+    lcd.clear();
+    lcd.noCursor();
+    lcd.setCursor(0,0);
+    buttonPushCounter++;
+    delay(150);
+     }
+   if(buttonstate_2 == HIGH &&  buttonPushCounter > 1)
+    {
+    
+    
+    lcd.clear();
+    lcd.noCursor();
+    lcd.setCursor(0,0);
+    buttonPushCounter--;
+    delay(150);
+     }
+  }while(buttonstate_1 == HIGH);
+
+   do
+   {
+    lcd.clear();
+    lcd.noCursor();
+    lcd.setCursor(0,0);
+    lcd.print("selection number");
+    lcd.setCursor(8,1);
+    lcd.print(buttonPushCounter);
+    delay(150);
+   }while(buttonstate_1 == HIGH);
+
+   /*do
+   {
+  if (buttonPushCounter % 1 == 0) {
   lcd.clear();
-  //lcd.noCursor();
+  lcd.noCursor();
   lcd.setCursor(0,0);
   lcd.print("Volume: ");
   lcd.print(setVol()/10);
   delay(150);
+  }else if (buttonPushCounter % 2 == 0)
+  {
+  lcd.clear();
+  lcd.noCursor();
+  lcd.setCursor(0,0);
+  lcd.print("Bass ");
+ lcd.print(setVol()/10);
+ delay(150);
+  }
+ else if((buttonPushCounter % 3 == 0))
+ {
+ lcd.clear();
+ lcd.noCursor();
+ lcd.setCursor(0,0);
+ lcd.print("Bass ");
+ lcd.print(setVol()/10); 
+ }
+ else
+ lcd.clear();
+ lcd.noCursor();
+ lcd.setCursor(0,0);
+ lcd.print("Kiwi Audio");
+ }while(buttonstate_1 == HIGH);*/
  
+ 
+ 
+ }
   
 
-}
+
 
 int setVol()
 {
   buttonstate_1 = digitalRead(Inc);
   buttonstate_2 = digitalRead(Dec);
-
+  
   while (buttonstate_1 == HIGH)
   {
     if (vol < 120){
