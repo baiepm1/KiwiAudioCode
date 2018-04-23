@@ -43,7 +43,7 @@ void loop()
   do
   {
    
-      if(buttonState == HIGH &&  buttonPushCounter < 3)
+      if(buttonState == HIGH)
     {
     
     
@@ -52,17 +52,12 @@ void loop()
     lcd.setCursor(0,0);
     buttonPushCounter++;
     delay(150);
+    
      }
-   if(buttonstate_2 == HIGH &&  buttonPushCounter > 1)
+     else if(buttonPushCounter > 3)
     {
-    
-    
-    lcd.clear();
-    lcd.noCursor();
-    lcd.setCursor(0,0);
-    buttonPushCounter--;
-    delay(150);
-     }
+      buttonPushCounter=1;
+    }
   }while(buttonstate_1 == HIGH);
 
    do
