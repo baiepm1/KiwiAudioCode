@@ -17,7 +17,6 @@ int buttonState = 0;         // current state of the button
 int lastButtonState = 0;     // previous state of the button
 int vol = 50;
 int Gain = 50;
-int Bass = 50;
 int temp = 120;
 
 
@@ -36,7 +35,6 @@ void setup()
   delay (1000);
   pinMode (CS_Vol, OUTPUT);
   pinMode (CS_Gain,OUTPUT);
-  pinMode (CS_Bass,OUTPUT);
   SPI.begin();
 }
 
@@ -58,19 +56,10 @@ void loop()
     delay(150);
     
      }
-     else if(buttonPushCounter > 3)
+     else if(buttonPushCounter > 2)
     {
       buttonPushCounter=1;
     }
-
-
-    //lcd.clear();
-    //lcd.noCursor();
-    //lcd.setCursor(0,0);
-    //lcd.print("selection number");
-    //lcd.setCursor(8,1);
-    //lcd.print(buttonPushCounter);
-    //delay(150);
   
     if (buttonPushCounter == 1) {
   lcd.clear();
@@ -84,19 +73,10 @@ void loop()
   lcd.clear();
   lcd.noCursor();
   lcd.setCursor(0,0);
-  lcd.print("Gain ");
+  lcd.print("Gain: ");
  lcd.print(setGain()/10);
  delay(150);
   }
- else if((buttonPushCounter  == 3))
- {
- lcd.clear();
- lcd.noCursor();
- lcd.setCursor(0,0);
- lcd.print("Bass ");
- lcd.print(setBass()/10); 
- delay(150);
- }
  else
  lcd.clear();
  lcd.noCursor();
@@ -165,33 +145,7 @@ int setGain()
   return Gain;
 }
 
-int setBass()
-{
-  buttonstate_1 = digitalRead(Inc);
-  buttonstate_2 = digitalRead(Dec);
-  
-  while (buttonstate_1 == HIGH)
-  {
-    if (Bass < 120){
-      Bass += 10;
-      digitalPotWrite_Bass(vol);
-      delay(50);
-    }
-    break;
-  }
 
-
-  while (buttonstate_2 == HIGH)
-  {
-    if (Bass > 0){
-      Bass -= 10;
-      digitalPotWrite_Bass(Bass);
-      delay(50);
-    }
-    break;
-  }
-  return Bass;
-}
 
 int digitalPotWrite_Vol(int value)
 {
@@ -209,11 +163,3 @@ int digitalPotWrite_Gain(int value)
   digitalWrite(CS_Gain, HIGH);
 }
 
-
-int digitalPotWrite_Bass(int value)
-{
-  digitalWrite(CS_Bass, LOW);
-  SPI.transfer(address);
-  SPI.transfer(value);
-  digitalWrite(CS_Bass, HIGH);
-}
