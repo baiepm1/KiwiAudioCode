@@ -150,7 +150,7 @@ int setGain()
 int digitalPotWrite_Vol(int value)
 {
   digitalWrite(CS_Vol, LOW);
-  SPI.transfer(address);
+  SPI.transfer(0);
   SPI.transfer(value);
   digitalWrite(CS_Vol, HIGH);
 }
@@ -158,8 +158,7 @@ int digitalPotWrite_Vol(int value)
 int digitalPotWrite_Gain(int value)
 {
   digitalWrite(CS_Gain, LOW);
-  SPI.transfer(address);
+  SPI.transfer(0);
   SPI.transfer(value);
   digitalWrite(CS_Gain, HIGH);
 }
-
