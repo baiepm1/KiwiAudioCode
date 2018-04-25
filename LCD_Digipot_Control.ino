@@ -2,7 +2,9 @@
 #include <LiquidCrystal.h>
 
 byte address = 0x00;
-int CS = 10;
+int CS_Vol = 10;
+int CS_Gain=22;
+int CS_Bass=24;
 const int rs = 1, en = 6, d4 = 5, d5 = 4, d6 = 3, d7 = 2;
 LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
 const int Dec = 9;
@@ -14,6 +16,8 @@ int buttonPushCounter = 1;   // counter for the number of button presses
 int buttonState = 0;         // current state of the button
 int lastButtonState = 0;     // previous state of the button
 int vol = 50;
+int Gain = 50;
+int Bass = 50;
 int temp = 120;
 
 
@@ -30,7 +34,9 @@ void setup()
   delay (1000);
   lcd.print(".");
   delay (1000);
-  pinMode (CS, OUTPUT);
+  pinMode (CS_Vol, OUTPUT);
+  pinMode (CS_Gain,OUTPUT);
+  pinMode (CS_Bass,OUTPUT);
   SPI.begin();
 }
 
@@ -40,9 +46,7 @@ void loop()
  buttonstate_2 = digitalRead(Dec);
  buttonState =  digitalRead(buttonchange);
 
-  do
-  {
-   
+
       if(buttonState == HIGH)
     {
     
@@ -58,10 +62,8 @@ void loop()
     {
       buttonPushCounter=1;
     }
-  }while(buttonstate_1 == HIGH);
 
-   do
-   {
+
     //lcd.clear();
     //lcd.noCursor();
     //lcd.setCursor(0,0);
@@ -82,8 +84,8 @@ void loop()
   lcd.clear();
   lcd.noCursor();
   lcd.setCursor(0,0);
-  lcd.print("Bass ");
- lcd.print(setVol()/10);
+  lcd.print("Gain ");
+ lcd.print(setGain()/10);
  delay(150);
   }
  else if((buttonPushCounter  == 3))
@@ -91,8 +93,8 @@ void loop()
  lcd.clear();
  lcd.noCursor();
  lcd.setCursor(0,0);
- lcd.print("Gain ");
- lcd.print(setVol()/10); 
+ lcd.print("Bass ");
+ lcd.print(setBass()/10); 
  delay(150);
  }
  else
@@ -101,14 +103,6 @@ void loop()
  lcd.setCursor(0,0);
  lcd.print("Kiwi Audio");
    
-   }while(buttonstate_1 == HIGH);
-
-   
-   
- 
-
- 
- 
  
  }
   
@@ -124,7 +118,7 @@ int setVol()
   {
     if (vol < 120){
       vol += 10;
-      digitalPotWrite(vol);
+      digitalPotWrite_Vol(vol);
       delay(50);
     }
     break;
@@ -135,7 +129,7 @@ int setVol()
   {
     if (vol > 0){
       vol -= 10;
-      digitalPotWrite(vol);
+      digitalPotWrite_Vol(vol);
       delay(50);
     }
     break;
@@ -143,10 +137,83 @@ int setVol()
   return vol;
 }
 
-int digitalPotWrite(int value)
+int setGain()
 {
-  digitalWrite(CS, LOW);
+  buttonstate_1 = digitalRead(Inc);
+  buttonstate_2 = digitalRead(Dec);
+  
+  while (buttonstate_1 == HIGH)
+  {
+    if (Gain < 120){
+      Gain += 10;
+      digitalPotWrite_Gain(Gain);
+      delay(50);
+    }
+    break;
+  }
+
+
+  while (buttonstate_2 == HIGH)
+  {
+    if (Gain > 0){
+      Gain -= 10;
+      digitalPotWrite_Gain(Gain);
+      delay(50);
+    }
+    break;
+  }
+  return Gain;
+}
+
+int setBass()
+{
+  buttonstate_1 = digitalRead(Inc);
+  buttonstate_2 = digitalRead(Dec);
+  
+  while (buttonstate_1 == HIGH)
+  {
+    if (Bass < 120){
+      Bass += 10;
+      digitalPotWrite_Bass(vol);
+      delay(50);
+    }
+    break;
+  }
+
+
+  while (buttonstate_2 == HIGH)
+  {
+    if (Bass > 0){
+      Bass -= 10;
+      digitalPotWrite_Bass(Bass);
+      delay(50);
+    }
+    break;
+  }
+  return Bass;
+}
+
+int digitalPotWrite_Vol(int value)
+{
+  digitalWrite(CS_Vol, LOW);
   SPI.transfer(address);
   SPI.transfer(value);
-  digitalWrite(CS, HIGH);
+  digitalWrite(CS_Vol, HIGH);
+}
+
+int digitalPotWrite_Gain(int value)
+{
+  digitalWrite(CS_Gain, LOW);
+  SPI.transfer(address);
+  SPI.transfer(value);
+  digitalWrite(CS_Gain, HIGH);
+}
+
+
+int digitalPotWrite_Bass(int value)
+{
+  digitalWrite(CS_Bass, LOW);
+  SPI.transfer(address);
+  SPI.transfer(value);
+  digitalWrite(CS_Bass, HIGH);
 }
