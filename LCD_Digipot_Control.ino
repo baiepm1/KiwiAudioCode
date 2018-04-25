@@ -62,25 +62,22 @@ void loop()
 
    do
    {
-    lcd.clear();
-    lcd.noCursor();
-    lcd.setCursor(0,0);
-    lcd.print("selection number");
-    lcd.setCursor(8,1);
-    lcd.print(buttonPushCounter);
-    delay(150);
-   }while(buttonstate_1 == HIGH);
-
-   /*do
-   {
-  if (buttonPushCounter % 1 == 0) {
+    //lcd.clear();
+    //lcd.noCursor();
+    //lcd.setCursor(0,0);
+    //lcd.print("selection number");
+    //lcd.setCursor(8,1);
+    //lcd.print(buttonPushCounter);
+    //delay(150);
+  
+    if (buttonPushCounter == 1) {
   lcd.clear();
   lcd.noCursor();
   lcd.setCursor(0,0);
   lcd.print("Volume: ");
   lcd.print(setVol()/10);
   delay(150);
-  }else if (buttonPushCounter % 2 == 0)
+  }else if (buttonPushCounter == 2)
   {
   lcd.clear();
   lcd.noCursor();
@@ -89,20 +86,27 @@ void loop()
  lcd.print(setVol()/10);
  delay(150);
   }
- else if((buttonPushCounter % 3 == 0))
+ else if((buttonPushCounter  == 3))
  {
  lcd.clear();
  lcd.noCursor();
  lcd.setCursor(0,0);
- lcd.print("Bass ");
+ lcd.print("Gain ");
  lcd.print(setVol()/10); 
+ delay(150);
  }
  else
  lcd.clear();
  lcd.noCursor();
  lcd.setCursor(0,0);
  lcd.print("Kiwi Audio");
- }while(buttonstate_1 == HIGH);*/
+   
+   }while(buttonstate_1 == HIGH);
+
+   
+   
+ 
+
  
  
  
