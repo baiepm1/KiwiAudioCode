@@ -1,6 +1,6 @@
 #include <SPI.h>
 #include <LiquidCrystal.h>
-
+#include <RN52.h>
 byte address = 0x00;
 int CS_Vol = 10;
 int CS_Gain=22;
@@ -81,8 +81,10 @@ void loop()
  lcd.clear();
  lcd.noCursor();
  lcd.setCursor(0,0);
- lcd.print("Kiwi Audio");
-   
+ //String Title = rn52.trackTitle();
+ ///lcd.print(Title);
+ //RN52 rn52(10,11);    //Set RX to 10 and TX to 11
+ //rn52.begin(38400);    //Begin communication with the RN52 at 38400baud
  
  }
   
