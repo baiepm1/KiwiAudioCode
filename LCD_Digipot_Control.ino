@@ -18,7 +18,7 @@ int lastButtonState = 0;     // previous state of the button
 int vol = 50;
 int Gain = 50;
 int temp = 120;
-
+RN52 rn52(10,11);    //Set RX to 10 and TX to 11
 
 void setup()
 {
@@ -36,6 +36,7 @@ void setup()
   pinMode (CS_Vol, OUTPUT);
   pinMode (CS_Gain,OUTPUT);
   SPI.begin();
+  rn52.begin(38400); 
 }
 
 void loop()
@@ -56,7 +57,7 @@ void loop()
     delay(150);
     
      }
-     else if(buttonPushCounter > 2)
+     else if(buttonPushCounter > 3)
     {
       buttonPushCounter=1;
     }
@@ -77,18 +78,14 @@ void loop()
  lcd.print(setGain()/10);
  delay(150);
   }
- else
+ else if (buttonPushCounter == 3)
  lcd.clear();
  lcd.noCursor();
  lcd.setCursor(0,0);
- //String Title = rn52.trackTitle();
- ///lcd.print(Title);
- //RN52 rn52(10,11);    //Set RX to 10 and TX to 11
- //rn52.begin(38400);    //Begin communication with the RN52 at 38400baud
- 
- }
-  
-
+ String Title = rn52.trackTitle();
+ lcd.print(Title);
+ delay(150);
+}
 
 
 int setVol()
