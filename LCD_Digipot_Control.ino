@@ -57,7 +57,7 @@ void loop()
     delay(150);
     
      }
-     else if(buttonPushCounter > 3)
+     else if(buttonPushCounter > 3 )
     {
       buttonPushCounter=1;
     }
@@ -79,13 +79,22 @@ void loop()
  delay(150);
   }
  else if (buttonPushCounter == 3)
+ {
  lcd.clear();
  lcd.noCursor();
  lcd.setCursor(0,0);
- String Title = rn52.trackTitle();
+  String Title = rn52.trackTitle();
  lcd.print(Title);
+  lcd.print("Kiwi Audio");
  delay(150);
+ }
+ else
+ lcd.clear();
+ lcd.noCursor();
+ lcd.print("Kiwi Audio");
 }
+  
+
 
 
 int setVol()
