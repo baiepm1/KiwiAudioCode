@@ -1,11 +1,12 @@
 #include <SPI.h>
 #include <LiquidCrystal.h>
 #include <RN52.h>
+
 byte address = 0x00;
 int CS_Vol = 10;
-int CS_Gain=22;
+int CS_Gain=11;
 int CS_Bass=24;
-const int rs = 1, en = 6, d4 = 5, d5 = 4, d6 = 3, d7 = 2;
+const int rs = 12, en = 6, d4 = 5, d5 = 4, d6 = 3, d7 = 2;
 LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
 const int Dec = 9;
 const int Inc = 8;
@@ -18,7 +19,7 @@ int lastButtonState = 0;     // previous state of the button
 int vol = 50;
 int Gain = 50;
 int temp = 120;
-RN52 rn52(10,11);    //Set RX to 10 and TX to 11
+RN52 rn52(51,52);    //Set RX to 10 and TX to 11
 
 void setup()
 {
@@ -35,8 +36,21 @@ void setup()
   delay (1000);
   pinMode (CS_Vol, OUTPUT);
   pinMode (CS_Gain,OUTPUT);
+  rn52.begin(115200); 
+ //String Title = rn52.trackTitle();
+  lcd.clear();
+  
+  lcd.setCursor(0,0);
+  lcd.print("gay");
+  delay (1000);
+  
+  lcd.clear();
+  lcd.setCursor(0,0);
+  
+ lcd.print(rn52.trackTitle());
+ delay (1000);
   SPI.begin();
-  rn52.begin(38400); 
+  
 }
 
 void loop()
@@ -45,7 +59,8 @@ void loop()
  buttonstate_2 = digitalRead(Dec);
  buttonState =  digitalRead(buttonchange);
 
-
+ 
+ 
       if(buttonState == HIGH)
     {
     
@@ -83,8 +98,6 @@ void loop()
  lcd.clear();
  lcd.noCursor();
  lcd.setCursor(0,0);
-  String Title = rn52.trackTitle();
- lcd.print(Title);
   lcd.print("Kiwi Audio");
  delay(150);
  }
