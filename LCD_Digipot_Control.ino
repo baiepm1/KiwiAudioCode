@@ -1,6 +1,6 @@
 #include <SPI.h>
 #include <LiquidCrystal.h>
-#include <RN52.h>
+//#include <RN52.h>
 
 byte address = 0x00;
 int CS_Vol = 10;
@@ -19,7 +19,7 @@ int lastButtonState = 0;     // previous state of the button
 int vol = 50;
 int Gain = 50;
 int temp = 120;
-RN52 rn52(51,52);    //Set RX to 10 and TX to 11
+//RN52 rn52(51,52);    //Set RX to 10 and TX to 11
 
 void setup()
 {
@@ -36,19 +36,8 @@ void setup()
   delay (1000);
   pinMode (CS_Vol, OUTPUT);
   pinMode (CS_Gain,OUTPUT);
-  rn52.begin(115200); 
+ // rn52.begin(115200); 
  //String Title = rn52.trackTitle();
-  lcd.clear();
-  
-  lcd.setCursor(0,0);
-  lcd.print("gay");
-  delay (1000);
-  
-  lcd.clear();
-  lcd.setCursor(0,0);
-  
- lcd.print(rn52.trackTitle());
- delay (1000);
   SPI.begin();
   
 }
